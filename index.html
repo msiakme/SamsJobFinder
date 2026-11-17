@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samantha's Job Finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#141019);--ink:light-dark(#1d1726,#f3eef8);--soft:light-dark(#5d5468,#b9afc6);--plum:light-dark(#3b1d5c,#2a1642);--plum2:light-dark(#53307a,#3b2160);--coral:#ef5a3c;--card:light-dark(#f6f2fa,#1e1828);--line:light-dark(#e2d9ec,#33294a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Outfit,system-ui,sans-serif;overflow-x:clip}
+h1,h2{font-family:"Young Serif",Georgia,serif;font-weight:400;line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,5vw,48px)}h2{font-size:28px;margin-bottom:6px}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.top{background:var(--plum);color:#fff}
+.top .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(20px,4vw,56px);align-items:center}
+.top p{color:#e4d8f2;margin:10px 0 0;max-width:46ch}
+.fig{position:relative;aspect-ratio:1;max-width:460px;width:100%;justify-self:center}
+.fig svg{position:absolute;inset:0;width:100%;height:100%}
+.lbl{font:500 13px Outfit,sans-serif;fill:#f3eaff}
+.ctl{margin-top:22px}
+.ctl h3{font:600 14px Outfit,sans-serif;margin:16px 0 8px;color:#f3eaff}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 16px;border-radius:22px;border:1.5px solid #8e6fb5;background:transparent;color:#fff;font:500 16px Outfit,sans-serif;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--coral);border-color:var(--coral)}
+.chip:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ffb4a3;outline-offset:2px}
+.fresh{margin-top:14px;font-size:15px;color:#ffd2c7}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px}
+.role{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.role h2{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.role h2 button{font:500 14px Outfit;background:none;border:0;color:var(--soft);cursor:pointer;min-height:44px}
+.links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.links a{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:48px;padding:8px 14px;border-radius:10px;background:var(--bg);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:500}
+.links a:hover{border-color:var(--coral)}
+.links a small{font-size:13px;color:var(--soft);font-weight:400}
+.links a.seen{opacity:.55}.links a.seen small{color:var(--coral)}
+.sub{color:var(--soft);margin:0 0 18px;max-width:70ch}
+.add{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+input,select{font:16px Outfit,sans-serif;min-height:44px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.btn{min-height:44px;padding:0 18px;border-radius:10px;border:0;background:var(--coral);color:#fff;font:600 16px Outfit,sans-serif;cursor:pointer}
+.emp{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+.emp a{display:block;padding:14px 16px;border-radius:12px;border:1px solid var(--line);text-decoration:none;color:var(--ink);background:var(--card)}
+.emp a b{display:block;font-weight:600}.emp a span{font-size:14px;color:var(--soft)}
+.alt{background:var(--card)}
+.track{display:grid;gap:8px;margin-top:14px}
+.tform{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:8px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:10px 14px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.item a{color:var(--ink);font-weight:600}.item small{display:block;color:var(--soft)}
+.item .x{background:none;border:0;color:var(--soft);font-size:22px;min-width:44px;min-height:44px;cursor:pointer}
+.empty{color:var(--soft);font-style:italic}
+.note{font-size:14px;color:var(--soft);margin-top:14px}
+@media(max-width:760px){.top .wrap{grid-template-columns:minmax(0,1fr)}.fig{max-width:360px}}
+@media(max-width:600px){.links{grid-template-columns:minmax(0,1fr)}.item{grid-template-columns:minmax(0,1fr) auto}.item select{grid-column:1}}
+@media(prefers-reduced-motion:no-preference){.ring{transition:fill .3s,stroke .3s}}
+</style>
+</head>
+<body>
+<section class="band top"><div class="wrap">
+  <div>
+    <h1>Samantha's Job Finder</h1>
+    <p>Jobs near Fleetwood, newest first. Pick how far to look, then tap a job board. Each search opens already set to that distance, showing only jobs posted since your last check.</p>
+    <div class="ctl">
+      <h3>How far from home</h3>
+      <div class="chips" id="dist"></div>
+      <h3>Posted within</h3>
+      <div class="chips" id="when"></div>
+      <div class="fresh" id="fresh"></div>
+    </div>
+  </div>
+  <div class="fig"><svg id="map" viewBox="0 0 400 400" role="img" aria-label="Distance rings around Fleetwood with nearby Berks towns"></svg></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <h2>Searches</h2>
+  <p class="sub">Links you've opened today fade out, so you can see what's left to check. Tomorrow they all come back with that day's new postings.</p>
+  <div class="roles" id="roles"></div>
+  <form class="add" id="addRole">
+    <input id="newRole" placeholder="Add another job title, e.g. medical assistant" aria-label="Add a job title" style="flex:1 1 260px">
+    <button class="btn" type="submit">Add search</button>
+  </form>
+</div></section>
+
+<section class="band alt"><div class="wrap">
+  <h2>Berks employers to check directly</h2>
+  <p class="sub">Big local employers often post on their own sites before the job boards pick the job up.</p>
+  <div class="emp" id="emp"></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <h2>My job list</h2>
+  <p class="sub">Keep track of jobs you like or applied to. This list is saved only on this phone or computer.</p>
+  <form class="tform" id="tform">
+    <input id="tTitle" placeholder="Job title" required aria-label="Job title">
+    <input id="tCo" placeholder="Company & town" aria-label="Company and town">
+    <input id="tUrl" placeholder="Link (optional)" aria-label="Link">
+    <button class="btn" type="submit">Save job</button>
+  </form>
+  <div class="track" id="track"></div>
+  <p class="note">The miles are straight-line. The 15-mile ring reaches a little into Lehigh County (Macungie, Alburtis). "All of Berks" searches the whole county by name.</p>
+</div></section>
+
+<script>
+{
+const DAY=864e5, now=Date.now();
+const store={get(k,d){try{const v=localStorage.getItem('bj_'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('bj_'+k,JSON.stringify(v))}catch(e){}}};
+
+const prev=store.get('last',null);
+const since=prev?Math.max(1,Math.ceil((now-prev)/DAY)):14;
+store.set('last',now);
+
+const DISTS=[{v:5,t:'5 mi'},{v:10,t:'10 mi'},{v:15,t:'15 mi'},{v:'berks',t:'All of Berks'}];
+const WHENS=[{v:'auto',t:'Since last check'},{v:1,t:'1 day'},{v:3,t:'3 days'},{v:7,t:'Week'},{v:14,t:'2 weeks'},{v:'any',t:'Any time'}];
+let dist=store.get('dist',10), when='auto';
+
+const DEF=[
+ {id:'cna',name:'CNA',q:'CNA OR "nurse aide" OR "nursing assistant"',s:'CNA'},
+ {id:'phleb',name:'Phlebotomist',q:'phlebotomist OR phlebotomy',s:'phlebotomist'},
+ {id:'photo',name:'Photographer',q:'photographer OR "photography assistant"',s:'photographer'}
+];
+let extra=store.get('extra',[]);
+const roles=()=>DEF.concat(extra.map(n=>({id:'x_'+n,name:n,q:n,s:n,custom:true})));
+
+const TOWNS=[['Blandon',3,225],['Topton',5,55],['Kutztown',7,40],['Oley',6,170],['Temple',7,235],['Leesport',9,285],['Reading',10,215],['Wyomissing',12,240],['Boyertown',13,135],['Hamburg',13,320],['Birdsboro',13,185],['Bernville',16,292],['Wernersville',17,252],['Morgantown',21,195],['Womelsdorf',22,264]];
+
+const days=()=>when==='auto'?since:when;
+const pick=(arr,d)=>d==='any'?null:(arr.find(x=>x>=d)||null);
+const loc=()=>dist==='berks'?'Berks County, PA':'Fleetwood, PA';
+const e=encodeURIComponent;
+
+function urls(r){
+ const d=days(), L=loc(), B=dist==='berks', R=B?null:dist;
+ const ind=pick([1,3,7,14],d), zr=pick([1,5,10,30],d), sh=pick([1,7,14,30],d);
+ const near=x=>[5,10,25,50].find(n=>n>=x);
+ return [
+  ['Indeed',`https://www.indeed.com/jobs?q=${e(r.q)}&l=${e(L)}${R?'&radius='+R:''}&sort=date${ind?'&fromage='+ind:''}`],
+  ['LinkedIn',`https://www.linkedin.com/jobs/search/?keywords=${e(r.s)}&location=${e(B?'Berks County, Pennsylvania':'Fleetwood, Pennsylvania')}${R?'&distance='+near(R):''}&sortBy=DD${d!=='any'?'&f_TPR=r'+d*86400:''}`],
+  ['ZipRecruiter',`https://www.ziprecruiter.com/jobs-search?search=${e(r.s)}&location=${e(L)}${R?'&radius='+near(R):''}${zr?'&days='+zr:''}`],
+  ['Google Jobs',`https://www.google.com/search?q=${e(r.s+' jobs '+(B?'in Berks County PA':'near Fleetwood PA'))}&udm=8`],
+  ['SimplyHired',`https://www.simplyhired.com/search?q=${e(r.s)}&l=${e(L)}${R?'&mi='+near(R):''}${sh?'&t='+sh:''}`],
+  ['Monster',`https://www.monster.com/jobs/search?q=${e(r.s)}&where=${e(L)}`],
+  ['Glassdoor',`https://www.glassdoor.com/Job/jobs.htm?sc.keyword=${e(r.s)}&locKeyword=${e(L)}`],
+  ['Craigslist',`https://reading.craigslist.org/search/${r.id==='photo'?'ggg':'jjj'}?query=${e(r.s)}&sort=date`]
+ ];
+}
+
+const today=new Date().toDateString();
+let seen=store.get('seen',{}); if(seen.day!==today) seen={day:today,k:{}};
+
+function chips(el,list,cur,set){
+ el.innerHTML=list.map(o=>`<button class="chip" type="button" data-v="${o.v}" aria-pressed="${String(o.v)===String(cur)}">${o.t}</button>`).join('');
+ el.onclick=ev=>{const b=ev.target.closest('.chip');if(!b)return;const v=b.dataset.v;set(isNaN(v)?v:+v);render()};
+}
+
+function drawMap(){
+ const s=document.getElementById('map'),c=200,k=7.6;
+ const rings=[5,10,15].map(m=>`<circle class="ring" cx="${c}" cy="${c}" r="${m*k}" fill="${dist!=='berks'&&m<=dist?'rgba(239,90,60,'+(m===dist?.28:.12)+')':'rgba(255,255,255,.04)'}" stroke="${m===dist?'#ef5a3c':'#8e6fb5'}" stroke-width="${m===dist?2.5:1.2}"/><text class="lbl" x="${c+4}" y="${c-m*k+15}" style="font-size:12px;opacity:.8">${m} mi</text>`).reverse().join('');
+ const outer=`<circle class="ring" cx="${c}" cy="${c}" r="${23*k}" fill="${dist==='berks'?'rgba(239,90,60,.14)':'none'}" stroke="${dist==='berks'?'#ef5a3c':'#8e6fb5'}" stroke-dasharray="5 6" stroke-width="${dist==='berks'?2.5:1.2}"/><text class="lbl" x="${c}" y="${c+23*k-8}" text-anchor="middle" style="font-size:12px;opacity:.8">all of Berks</text>`;
+ const towns=TOWNS.map(([n,m,a])=>{const r=m*k,x=c+r*Math.sin(a*Math.PI/180),y=c-r*Math.cos(a*Math.PI/180),inn=dist==='berks'||m<=dist,left=x<c;
+  return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5" fill="${inn?'#ffd2c7':'#8e6fb5'}"/><text class="lbl" x="${(x+(left?-7:7)).toFixed(1)}" y="${(y+4).toFixed(1)}" text-anchor="${left?'end':'start'}" style="opacity:${inn?1:.55}">${n}</text>`}).join('');
+ s.innerHTML=outer+rings+towns+`<circle cx="${c}" cy="${c}" r="8" fill="#ef5a3c" stroke="#fff" stroke-width="2.5"/><text class="lbl" x="${c}" y="${c+24}" text-anchor="middle" style="font-weight:600;font-size:14px">Fleetwood</text>`;
+}
+
+function renderRoles(){
+ document.getElementById('roles').innerHTML=roles().map(r=>`<div class="role"><h2>${esc(r.name)}${r.custom?`<button type="button" data-del="${esc(r.name)}">Remove</button>`:''}</h2><div class="links">${urls(r).map(([b,u])=>{const key=r.id+'|'+b,sn=seen.k[key];return `<a href="${u}" target="_blank" rel="noopener" data-k="${esc(key)}" class="${sn?'seen':''}">${b}<small>${sn?'opened':'open ›'}</small></a>`}).join('')}</div></div>`).join('');
+}
+
+const EMP=[
+ ['Tower Health / Reading Hospital','CNAs, phlebotomy, patient care · West Reading','https://www.towerhealth.org/careers'],
+ ['Penn State Health St. Joseph','CNAs, lab & phlebotomy · Bern Twp','https://careers.pennstatehealth.org'],
+ ['Labcorp','Phlebotomists at patient service centers','https://careers.labcorp.com'],
+ ['Quest Diagnostics','Phlebotomists at patient service centers','https://careers.questdiagnostics.com'],
+ ['American Red Cross','Blood drive phlebotomists','https://www.redcross.org/about-us/careers.html'],
+ ['Phoebe Berks','CNAs at a senior living community · Wernersville','https://www.phoebe.org/careers'],
+ ['Berks Heim','County nursing home · Bern Twp','https://www.google.com/search?q='+e('Berks Heim careers CNA')],
+ ['PA CareerLink','State job bank + free job help in Reading','https://www.pacareerlink.pa.gov']
+];
+document.getElementById('emp').innerHTML=EMP.map(([n,d,u])=>`<a href="${u}" target="_blank" rel="noopener"><b>${n}</b><span>${d}</span></a>`).join('');
+
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+let jobs=store.get('jobs',[]);
+const ST=['Interested','Applied','Interview','Not for me'];
+function renderJobs(){
+ const t=document.getElementById('track');
+ if(!jobs.length){t.innerHTML='<p class="empty">No saved jobs yet. When something looks good, add it here.</p>';return}
+ t.innerHTML=jobs.map((j,i)=>`<div class="item"><div>${j.u?`<a href="${esc(j.u)}" target="_blank" rel="noopener">${esc(j.t)}</a>`:`<b>${esc(j.t)}</b>`}<small>${esc(j.c||'')}${j.c?' · ':''}saved ${new Date(j.d).toLocaleDateString()}</small></div><select data-i="${i}" aria-label="Status">${ST.map(s=>`<option${s===j.s?' selected':''}>${s}</option>`).join('')}</select><button class="x" type="button" data-rm="${i}" aria-label="Remove">×</button></div>`).join('');
+}
+
+function render(){
+ chips(document.getElementById('dist'),DISTS,dist,v=>{dist=v;store.set('dist',v)});
+ chips(document.getElementById('when'),WHENS,when,v=>{when=v});
+ const f=document.getElementById('fresh');
+ f.textContent=when==='auto'?(prev?`Last checked ${since===1?'within the past day':since+' days ago'}, so you'll see jobs posted since then.`:'First visit: showing the past 2 weeks. Next time, you\'ll see only what\'s new.'):'';
+ drawMap();renderRoles();
+}
+
+document.getElementById('roles').addEventListener('click',ev=>{
+ const d=ev.target.closest('[data-del]');if(d){extra=extra.filter(x=>x!==d.dataset.del);store.set('extra',extra);render();return}
+ const a=ev.target.closest('a[data-k]');if(a){seen.k[a.dataset.k]=1;store.set('seen',seen);a.classList.add('seen');a.querySelector('small').textContent='opened'}
+});
+document.getElementById('addRole').addEventListener('submit',ev=>{ev.preventDefault();const i=document.getElementById('newRole'),v=i.value.trim();if(v&&!extra.includes(v)){extra.push(v);store.set('extra',extra);render()}i.value=''});
+document.getElementById('tform').addEventListener('submit',ev=>{ev.preventDefault();const g=id=>document.getElementById(id);const u=g('tUrl').value.trim();jobs.unshift({t:g('tTitle').value.trim(),c:g('tCo').value.trim(),u:/^https?:\/\//i.test(u)?u:'',s:'Interested',d:now});store.set('jobs',jobs);ev.target.reset();renderJobs()});
+document.getElementById('track').addEventListener('change',ev=>{const s=ev.target.closest('select');if(s){jobs[s.dataset.i].s=s.value;store.set('jobs',jobs)}});
+document.getElementById('track').addEventListener('click',ev=>{const b=ev.target.closest('[data-rm]');if(b){jobs.splice(+b.dataset.rm,1);store.set('jobs',jobs);renderJobs()}});
+
+render();renderJobs();
+}
+</script>
+</body>
+</html>
